@@ -47,12 +47,14 @@ def create_virtual_env(venv_path: str) -> None:
     print('No `venv` found... creating')
     os.system('python3 -m virtualenv env')
 
+
 def is_argument_passed(arguments: list[str], command: list[str]) -> bool:
   full_command = ' '.join(command)
   for arg in arguments:
     if arg in full_command:
       return True
   return False
+
 
 def strip_custom_commands(command: list[str]) -> list[str]:
   allowed = []
@@ -62,7 +64,8 @@ def strip_custom_commands(command: list[str]) -> list[str]:
     allowed.append(arg)
   return allowed
 
-def help() -> None:
+
+def show_help() -> None:
   print('Pip wrapper')
   print('Usage:')
   print('If you have created an alias for the tool (referenced as `mpip` here),')
@@ -80,11 +83,11 @@ def main(*args: list[str]) -> None:
 
   if len(args) == 0:
     print('No arguments passed')
-    help()
+    show_help()
     quit(1)
 
   if is_argument_passed(['-h', '--help', 'help'], args):
-    help()
+    show_help()
     quit(0)
 
   ensure_virtualenv_installed()
