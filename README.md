@@ -25,8 +25,3 @@ For example:
 mpip install fire
 mpip uninstall numpy
 ```
-
-## Known issues
-- `mpip install -r requirements.txt` Does not work, `-` strips all arguments past it.
-
-
