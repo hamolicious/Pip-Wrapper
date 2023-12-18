@@ -47,8 +47,36 @@ def create_virtual_env(venv_path: str) -> None:
     print('No `venv` found... creating')
     os.system('python3 -m virtualenv env')
 
+def is_argument_passed(arguments: list[str], command: list[str]) -> bool:
+  full_command = ' '.join(command)
+  for arg in arguments:
+    if arg in full_command:
+      return True
+  return False
+
+def help() -> None:
+  print('Pip wrapper')
+  print('Usage:')
+  print('If you have created an alias for the tool (referenced as `mpip` here),')
+  print('simply replace `pip` with `mpip` for your commands')
+  print('\tmpip install <package>')
+  print('\tmpip install -r requirements.txt')
+  print('')
+  print('Options:')
+  print('\t-n, --no-req         Do not generate/change requirements.txt')
+  print('\thelp, -h, --help     Show this help message')
+
 
 def main(*args: list[str]) -> None:
+  if len(args) == 0:
+    print('No arguments passed')
+    help()
+    quit(1)
+
+  if is_argument_passed(['-h', '--help', 'help'], args):
+    help()
+    quit(0)
+
   ensure_virtualenv_installed()
 
   venv_path = get_venv_path()
@@ -58,7 +86,10 @@ def main(*args: list[str]) -> None:
 
   os.system(f'{interpreter_path} -m pip {" ".join(args)}')
 
-  freeze_requirements(interpreter_path)
+  if not is_argument_passed(['-n', '--no-req'], args):
+    freeze_requirements(interpreter_path)
+
+  quit(0)
 
 if __name__ == '__main__':
   main(*sys.argv[1::])
