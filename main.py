@@ -1,5 +1,5 @@
-import fire
 import os
+import sys
 
 
 def is_virtualenv_installed() -> bool:
@@ -61,4 +61,4 @@ def main(*args: list[str]) -> None:
   freeze_requirements(interpreter_path)
 
 if __name__ == '__main__':
-  fire.Fire(main)
+  main(*sys.argv[1::])
