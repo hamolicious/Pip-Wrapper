@@ -96,6 +96,9 @@ def main(*args: list[str]) -> None:
   create_virtual_env(venv_path)
 
   interpreter_path = get_interpreter_path()
+  if interpreter_path is None:
+    print('Something went wrong, cannot find the virtualenv')
+    quit(1)
 
   os.system(f'{interpreter_path} -m pip {" ".join(pip_only_args)}')
 
