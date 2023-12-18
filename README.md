@@ -22,6 +22,7 @@ DOSKEY mpip="python /path/to/script/main.py $_"
 Replace your existing `pip` commands with your alias (`mpip` in my case).
 For example:
 ```bash
+mpip --help
 mpip install fire
 mpip uninstall numpy
 ```
