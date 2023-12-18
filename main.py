@@ -54,6 +54,14 @@ def is_argument_passed(arguments: list[str], command: list[str]) -> bool:
       return True
   return False
 
+def strip_custom_commands(command: list[str]) -> list[str]:
+  allowed = []
+  for arg in command:
+    if arg in ['help', '-n', '--no-req', '-h', '--help']:
+      continue
+    allowed.append(arg)
+  return allowed
+
 def help() -> None:
   print('Pip wrapper')
   print('Usage:')
@@ -68,6 +76,8 @@ def help() -> None:
 
 
 def main(*args: list[str]) -> None:
+  pip_only_args = strip_custom_commands(args)
+
   if len(args) == 0:
     print('No arguments passed')
     help()
@@ -84,7 +94,7 @@ def main(*args: list[str]) -> None:
 
   interpreter_path = get_interpreter_path()
 
-  os.system(f'{interpreter_path} -m pip {" ".join(args)}')
+  os.system(f'{interpreter_path} -m pip {" ".join(pip_only_args)}')
 
   if not is_argument_passed(['-n', '--no-req'], args):
     freeze_requirements(interpreter_path)
