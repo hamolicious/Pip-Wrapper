@@ -12,6 +12,8 @@ On unix style systems:
 ```bash
 alias mpip="python /path/to/script/main.py $@"
 ```
+
+On windows:
 ```cmd
 DOSKEY mpip="python /path/to/script/main.py $_"
 ```
